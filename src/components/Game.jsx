@@ -46,6 +46,7 @@ function Game() {
         // Call the setter with the NEW array
         setUpgrades(updatedUpgrades);
         }
+        
   return (
     <div className="card">
       <h2>Cookies: {cookies}</h2>
