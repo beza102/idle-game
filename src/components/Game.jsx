@@ -1,70 +1,44 @@
-import React from"react";
+import React from "react";
+import Button from "./Button";
+import UpgradeList from "./UpgradeList";
+import PlayerStats from "./PlayerStats";
 
 function Game() {
-  // Number state
   const [cookies, setCookies] = React.useState(0);
-  const [cookiesPerClick, setCookiesPerClick] = React.useState(1); 
-
-  // state for upgrade
+  const [cookiesPerClick, setCookiesPerClick] = React.useState(1);
   const [upgrades, setUpgrades] = React.useState([
     { id: 1, name: "Extra Cookie", cost: 5, purchased: false },
   ]);
-
-  // Object state (player)
   const [player, setPlayer] = React.useState({ name: "Player 1", clicks: 0 });
-  
 
-  
- 
-
-  // Click cookie
   function handleClick() {
-    setCookies(prevCookies => prevCookies + cookiesPerClick);
-    setPlayer(prevPlayer =>({
-        ...prevPlayer, clicks:prevPlayer.clicks +1}));
+    setCookies((prev) => prev + cookiesPerClick);
+    setPlayer((prev) => ({ ...prev, clicks: prev.clicks + 1 }));
   }
 
-  // Buy upgrade
   function buyUpgrade(id) {
-    const upgradeToBuy =upgrades.find(u=> u.id ===id);
-      if (!upgradeToBuy ||cookies <upgradeToBuy.cost || upgradeToBuy.purchased){
-        return;
-      }
-        //update number
-          setCookies(prevCookies => prevCookies- upgradeToBuy.cost);
-          setCookiesPerClick(prevClick => prevClick+ 1); 
-        //update array
-          const updatedUpgrades = upgrades.map(u => {
-            if (u.id === id) {
-            // Create a NEW object
-            return { ...u, purchased: true }; 
-            }
-            
-            return u;
-        });
+    const upgradeToBuy = upgrades.find((u) => u.id === id);
+    if (!upgradeToBuy || cookies < upgradeToBuy.cost || upgradeToBuy.purchased) return;
 
-        // Call the setter with the NEW array
-        setUpgrades(updatedUpgrades);
-        }
-        
+    setCookies((prev) => prev - upgradeToBuy.cost);
+    setCookiesPerClick((prev) => prev + 1);
+
+    setUpgrades((prev) =>
+      prev.map((u) =>
+        u.id === id ? { ...u, purchased: true } : u
+      )
+    );
+  }
+
   return (
-    <div className="card">
+    <div className="card text-center p-4">
       <h2>Cookies: {cookies}</h2>
-      <button onClick={handleClick}>🍪 Click Me!</button>
 
-      <h3>Upgrades</h3>
-      {upgrades.map(function(u) {
-        return (
-          <div key={u.id}>
-            {u.name} - Cost: {u.cost}  
-            <button onClick={() => buyUpgrade(u.id)} disabled={u.purchased || cookies < u.cost}>
-              {u.purchased ? "Purchased" : "Buy"}
-            </button>
-          </div>
-        );
-      })}
+      <Button onClick={handleClick} />
 
-      <p>Total clicks: {player.clicks}</p>
+      <UpgradeList upgrades={upgrades} cookies={cookies} onBuy={buyUpgrade} />
+
+      <PlayerStats player={player} />
 
       {cookies >= 10 && <h2>🎉 You Win! 🎉</h2>}
     </div>
@@ -72,4 +46,3 @@ function Game() {
 }
 
 export default Game;
-

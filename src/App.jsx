@@ -3,6 +3,9 @@ import Header from "./components/Header";
 import Game from "./components/Game";
 import Footer from "./components/Footer";
 import './App.css';
+import Button from "./components/Button";
+
+
 
 
 function App() {
@@ -11,6 +14,7 @@ function App() {
       <Header />
       <Game />
       <Footer />
+      <Button />
     </div>
   );
 }
