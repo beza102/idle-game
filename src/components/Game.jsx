@@ -12,7 +12,7 @@ function Game() {
   const [player, setPlayer] = React.useState({ name: "Player 1", clicks: 0 });
 
   function handleClick() {
-    setCookies((prev) => prev + cookiesPerClick);
+    setCookies((prev) => prev - cookiesPerClick);
     setPlayer((prev) => ({ ...prev, clicks: prev.clicks + 1 }));
   }
 
@@ -40,7 +40,7 @@ function Game() {
 
       <PlayerStats player={player} />
 
-      {cookies >= 10 && <h2>🎉 You Win! 🎉</h2>}
+      {cookies <= 10 && <h2>🎉 You Win! 🎉</h2>}
     </div>
   );
 }

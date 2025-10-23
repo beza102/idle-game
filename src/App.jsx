@@ -4,6 +4,7 @@ import Game from "./components/Game";
 import Footer from "./components/Footer";
 import './App.css';
 import Button from "./components/Button";
+import PlayerStats from "./components/PlayerStats";
 
 
 
@@ -15,6 +16,7 @@ function App() {
       <Game />
       <Footer />
       <Button />
+      
     </div>
   );
 }
